@@ -1,5 +1,5 @@
 const EcommerceCard = (props) => {
-  const { cardData } = props;
+  const { cardData,onClick } = props;
   const { 
      images,
      title,
@@ -10,7 +10,7 @@ const EcommerceCard = (props) => {
       } =
   cardData;
   return (
-    <div className="ecommerce-card" style={{backgroundColor: "#f0f0f0"}}>
+    <div className="ecommerce-card" style={{backgroundColor: "#f0f0f0"}} onClick={onClick}>
       <img className="card-image" src={images[0]}>
       </img>
       <h3 style={{marginTop:"10px"}}>{title}</h3>

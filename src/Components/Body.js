@@ -1,9 +1,10 @@
 import EcommerceCard from "./EcommerceCard"
 import { useState, useEffect } from "react"
 import Shimmer from "./Shimmer"
-
+import { useNavigate } from "react-router-dom";
 
 const Body = () => {
+  const navigate = useNavigate();
   const [listOfShops, setListOfShops] = useState([])
   const [filteredList, setFilteredList] = useState([])
   const [searchText, setSearchText] = useState("")
@@ -12,6 +13,7 @@ const Body = () => {
 useEffect(() => {
   fetchData();
 }, [])  
+
 
 const fetchData = async () => {
   const data = await fetch("https://dummyjson.com/products")
@@ -25,7 +27,10 @@ const fetchData = async () => {
     json?.products
   );
 }
-
+const handleCardClick = (id) => {
+  console.log(id)
+  navigate(`/item/${id}`);
+};
 
   console.log(listOfShops)
   return !listOfShops || listOfShops.length === 0 ? (<Shimmer/>) :
@@ -63,11 +68,19 @@ const fetchData = async () => {
         {isFiltering
           ? filteredList.length > 0
             ? filteredList.map((shop) => (
-                <EcommerceCard key={shop.id} cardData={shop} />
+                <EcommerceCard
+                  key={shop.id}
+                  cardData={shop}
+                  onClick={() => handleCardClick(shop.id)}
+                />
               ))
             : <p>No shops match your criteria.</p>
           : listOfShops.map((shop) => (
-              <EcommerceCard key={shop.id} cardData={shop} />
+              <EcommerceCard
+                key={shop.id}
+                cardData={shop}
+                onClick={() => handleCardClick(shop.id)}
+              />
             ))}
       </div>
     </div>
